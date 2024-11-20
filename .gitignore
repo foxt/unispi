@@ -1,0 +1,8 @@
+*.json
+captures/
+configs/
+mongo/
+node_modules/
+build/
+keys.txt
+.DS_Store
