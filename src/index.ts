@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import http from 'http';
 import { MongoClient } from 'mongodb';
 import { Readable } from 'stream';
-import { parseInformPacket } from "./inform/informpacket.js";
+import { parseInformPacket } from "./informpacket.js";
 
 let mongo = new MongoClient("mongodb://localhost:27017");
 let db = mongo.db('unispi');

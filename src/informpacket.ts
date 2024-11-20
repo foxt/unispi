@@ -1,7 +1,32 @@
 import { subtle, webcrypto } from 'crypto';
 import { uncompress as unSnappy } from 'snappyjs';
 import { inflateSync as inflateZlib } from 'zlib';
-import { InformPacketFlag, InformPacketHeader } from '../types/InformPacket';
+
+
+export const enum InformPacketDataType {
+    Binary, JSON
+}
+
+export type InformPacketFlag = 
+    "Encrypted" | "EncryptedGCM" | 
+    "Compressed" | "CompressedSnappy" | `Unk_${number}`;
+
+export interface InformPacketHeader {
+    rawPacket: Buffer;
+    rawHeader: Buffer;
+    fields: {
+        version: number;
+        mac: string;
+        encryptionMethod: "none" | "AES-GCM" | "AES-CBC";
+        compressionMethod: "none" | "zlib" | "Snappy";
+        iv: Uint8Array;
+        dataType: InformPacketDataType;
+        flags: InformPacketFlag[];
+        payloadLength: number;
+    }
+    payload: Uint8Array;
+}
+
 
 // Default key for UBNT devices - literally just `md5("ubnt")`
 const UBNT_DEFAULT_KEY = "ba86f2bbe107c7c57eb5f2690775c712";
